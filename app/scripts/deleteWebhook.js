@@ -29,5 +29,5 @@ async function deleteWebhook(webhookId) {
 }
 
 // Run the function (Replace with actual webhook ID)
-const webhookId = "1691838120228"; // Replace this with the actual webhook ID
+const webhookId = "1697300807972"; // Replace this with the actual webhook ID using listWebhooks.js
 deleteWebhook(webhookId);

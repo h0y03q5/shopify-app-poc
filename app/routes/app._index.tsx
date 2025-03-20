@@ -77,7 +77,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     );
 
     const responseJson = await response.json();
-    console.log("Fetched Products:", responseJson.data.products.edges);
+    //console.log("Fetched Products:", responseJson.data.products.edges);
     return { products: responseJson.data.products.edges };
   }
 
@@ -105,7 +105,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       );
   
       const responseJson = await response.json();
-      
+      console.log("Fetched Products:", responseJson.data.orders.edges);
       if (responseJson.errors) {
         console.error("GraphQL Errors:", responseJson.errors);
       }
@@ -199,23 +199,28 @@ export default function Index() {
                   </>
                 )}
 
-                {orders.length > 0 && (
-                  <>
-                    <Text as="h3" variant="headingMd">
-                      All Orders:
-                    </Text>
-                    <Box padding="400" background="bg-surface-active">
-                      <ul>
-                        {orders.map(({ node }: any) => (
-                          <li key={node.id}>
-                            {node.name} - ${node.totalPrice} -{" "}
-                            {node.fulfillmentStatus}
-                          </li>
-                        ))}
-                      </ul>
-                    </Box>
-                  </>
-                )}
+{orders.length > 0 && (
+  <>
+    <Text as="h3" variant="headingMd">
+      All Orders:
+    </Text>
+    <Box padding="400" background="bg-surface-active">
+      <ul>
+        {orders.map(({ node }: any) => (
+          <li key={node?.id}>
+            <strong>Order ID:</strong> {node?.id || "N/A"} <br />
+            <strong>Name:</strong> {node?.name || "N/A"} <br />
+            <strong>Total Price:</strong> {node?.totalPriceSet?.presentmentMoney?.amount 
+              ? `$${node.totalPriceSet.presentmentMoney.amount}` 
+              : "N/A"} <br />
+            <strong>Fulfillment Status:</strong> {node?.displayFulfillmentStatus || "N/A"} <br />
+            <hr />
+          </li>
+        ))}
+      </ul>
+    </Box>
+  </>
+)}
               </BlockStack>
             </Card>
           </Layout.Section>
